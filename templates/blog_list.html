@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row" id="blog-container">
+
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '/blog-api/blogs/',  
+                method: 'GET',
+                success: function(data) {
+                    data.forEach(function(blog) {
+                        var card = `
+                            <div class="col-md-4 mb-3">
+                                <div class="card blog-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${blog.title}</h5>
+                                        <p class="card-text">${blog.content}</p>
+                                        <p class="card-text"><small class="text-muted">${blog.created_date}</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        $('#blog-container').append(card);
+                    });
+                },
+                error: function(error) {
+                    console.error('Error fetching blogs:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
